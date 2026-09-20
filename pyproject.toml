@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "domain-forensics-tool"
+version = "0.1.0"
+description = "RDAP and WHOIS domain history investigation and evidence export CLI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Domain Forensics Contributors" }
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Security",
+]
+dependencies = [
+  "requests>=2.31.0",
+  "python-whois>=0.9.4",
+]
+
+[project.urls]
+Homepage = "https://pypi.org/project/domain-forensics-tool/"
+
+[project.scripts]
+domain-forensics = "main:main"
+
+[tool.setuptools]
+py-modules = ["main"]

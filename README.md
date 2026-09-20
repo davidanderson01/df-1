@@ -2,6 +2,22 @@
 
 runs recon on public domains
 
+## Install from PyPI
+
+After publication, install the CLI with:
+
+```powershell
+python -m pip install domain-forensics-tool
+```
+
+Then run it from any directory:
+
+```powershell
+domain-forensics --no-color
+```
+
+The command prompts for one or more domains and exports timestamped JSON and CSV reports to `Downloads/report`.
+
 ## Scan and download a report
 
 Run the script without a domain and enter one or more domains when prompted:
