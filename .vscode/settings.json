@@ -1,0 +1,13 @@
+{
+    "chat.agentSkillsLocations": {
+        ".agents/skills": true,
+        ".github/skills": true,
+        ".claude/skills": true,
+        "~/.agents/skills": true,
+        "~/.copilot/skills": true,
+        "~/.claude/skills": true,
+        "Manage auto-install/update setting": true
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python2.pythonPath": ".venv\\Scripts\\python.exe"
+}
