@@ -13,26 +13,26 @@ Run the script without a domain and enter one or more domains when prompted:
 Enter domains separated by commas, for example:
 
 ```text
-elevatecraft.com, example.org
+example.com, example.org
 ```
 
-Each investigation immediately creates both reports. A single domain uses:
+Each investigation immediately creates both reports using the domain and UTC scan time:
 
 ```text
-Downloads/report/domain_history.json
-Downloads/report/domain_history.csv
+<user-home>/Downloads/report/example.com_<UTC-date-time>_domain_history.json
+<user-home>/Downloads/report/example.com_<UTC-date-time>_domain_history.csv
 ```
 
-Multiple domains receive separate filenames such as `elevatecraft.com_domain_history.json` and `example.org_domain_history.csv`.
+Multiple domains receive separate timestamped filenames for each entered domain.
 
 You can also provide a domain directly:
 
 ```powershell
-& ".\.venv\Scripts\python.exe" .\main.py elevatecraft.com --no-color
+& ".\.venv\Scripts\python.exe" .\main.py example.com --no-color
 ```
 
 ## Tests
 
 ```powershell
-& "C:\Users\david\AppData\Local\Microsoft\WindowsApps\python.exe" -m pytest -q tests/test_domain_forensics.py
+& ".\.venv\Scripts\python.exe" -m pytest -q tests/test_domain_forensics.py
 ```

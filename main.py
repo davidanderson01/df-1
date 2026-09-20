@@ -20,7 +20,7 @@ except Exception:  # pragma: no cover - optional dependency
 
 import requests
 
-DEFAULT_DOMAIN = "elevatecraft.com"
+DEFAULT_DOMAIN = "example_domain.com"
 RDAP_URL = "https://rdap.org/domain/{domain}"
 AFTERMARKET_NS_HINTS = (
     "afternic",
@@ -680,14 +680,21 @@ def prompt_for_domains() -> list[str]:
             print(f"Invalid domain input: {exc}")
 
 
-def destination_for_domain(csv_destination: str | None, domain: str, multiple: bool) -> str | None:
+def destination_for_domain(
+    csv_destination: str | None,
+    domain: str,
+    multiple: bool,
+    timestamp: str | None = None,
+) -> str | None:
     if csv_destination and not multiple:
         return csv_destination
+    filename_timestamp = timestamp or datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    filename = f"{domain}_{filename_timestamp}_domain_history.csv"
     report_dir = Path.home() / "Downloads" / "report"
     if csv_destination and multiple:
         requested_path = Path(csv_destination)
-        return str(requested_path.with_name(f"{requested_path.stem}_{domain}{requested_path.suffix or '.csv'}"))
-    return str(report_dir / f"{domain}_domain_history.csv") if multiple else None
+        return str(requested_path.with_name(filename))
+    return str(report_dir / filename)
 
 
 def main() -> int:
@@ -721,7 +728,8 @@ def main() -> int:
 
         verdict = classify_domain_history(rdap_data)
         whois_text = fetch_whois(domain)
-        csv_destination = destination_for_domain(args.csv, domain, len(domains) > 1)
+        scan_timestamp = scan_started_at.strftime("%Y%m%d-%H%M%S")
+        csv_destination = destination_for_domain(args.csv, domain, len(domains) > 1, scan_timestamp)
         csv_path, json_path = export_evidence_bundle(domain, rdap_data, whois_text, csv_destination, scan_started_at)
         print(f"JSON evidence bundle saved to: {json_path}")
         print(f"CSV timeline saved to: {csv_path}")

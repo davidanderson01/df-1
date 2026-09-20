@@ -16,6 +16,7 @@ from main import (
     extract_email_addresses,
     parse_whois_text,
     parse_domain_input,
+    destination_for_domain,
 )
 
 
@@ -27,6 +28,10 @@ class TestDomainForensics(unittest.TestCase):
     def test_parse_domain_input_rejects_blank_input(self):
         with self.assertRaises(ValueError):
             parse_domain_input("   ")
+
+    def test_destination_for_domain_uses_domain_datetime_history_name(self):
+        destination = destination_for_domain(None, "example.com", False, "20260920-214600")
+        self.assertTrue(destination.endswith("example.com_20260920-214600_domain_history.csv"))
 
     def test_lapse_classifier_flags_after_expiration_reacquisition(self):
         data = {
@@ -105,12 +110,12 @@ Name Server: NS2.AFTERNIC.COM
 
     def test_extract_email_addresses_finds_candidates(self):
         text = '''
-Registrant Email: admin@elevatecraft.com
+Registrant Email: admin@example.com
 Tech Email: support@domain.com
 Abuse Contact: abuse@godaddy.com
 '''
         emails = extract_email_addresses(text)
-        self.assertIn("admin@elevatecraft.com", emails)
+        self.assertIn("admin@example.com", emails)
         self.assertIn("abuse@godaddy.com", emails)
 
     def test_build_evidence_bundle_includes_email_candidates(self):
